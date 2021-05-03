@@ -1,0 +1,345 @@
+#map {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#page-content {
+  overflow: hidden;
+}
+.map-overlay {
+  position: absolute;
+  width: 380px;
+  min-width: 380px;
+  top: 0;
+  right: 40px;
+  padding: 10px;
+  z-index: 2;
+}
+
+.map-overlay .map-overlay-inner {
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.map-overlay table {
+  border: none;
+  width: 100%;
+}
+
+.map-overlay h2 {
+  line-height: 24px;
+  display: block;
+  margin: 0 0 10px;
+}
+
+.map-overlay label {
+  display: block;
+  vertical-align: middle;
+  margin: 0 0 0 10px;
+  padding: 0;
+}
+
+.map-overlay .legend .bar {
+  height: 10px;
+  width: 100%;
+  background: linear-gradient(to right, #fca107, #7f3121);
+}
+
+.map-overlay input {
+  background-color: transparent;
+  display: inline-block;
+  width: 100%;
+  min-width: 220px;
+  position: relative;
+  margin: 6px 0 0 0;
+  cursor: ew-resize;
+}
+
+.map-overlay p.credit {
+  margin: 0;
+  padding: 0;
+}
+
+/* Map Legend */
+.map-legend {
+  position: absolute;
+  bottom: 35px;
+  right: 20px;
+  border-radius: 4px;
+  border: 1px solid #999999;
+  background: white;
+  z-index: 105;
+  cursor: text;
+}
+.map-legend .choropleth {
+  box-shadow: none;
+  cursor: text;
+}
+.map-legend ul {
+  min-width: 210px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.map-legend ul li.graph {
+  clear: both;
+  overflow: hidden;
+  display: table;
+  width: 100%;
+  height: 22px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #b3b3b3;
+}
+.map-legend ul li.graph div {
+  width: 10px;
+  height: 22px;
+}
+.map-legend li.graph .colors {
+  display: table-row;
+  width: 10px;
+  height: 22px;
+}
+.map-legend li.graph .quartile {
+  display: table-cell;
+}
+/* box-shadow: inset 0px 0px 0px 1px rgb(0 0 0 / 20%); */
+/* TOOLBAR BUTTON */
+#toolbar {
+  display: none;
+  height: calc(100% - 70px);
+  width: 300px;
+  margin-left: 22.5px;
+  border-radius: 0 0 5px 5px;
+  background: rgba(255, 255, 255, 0.39);
+  position: absolute;
+  top: 50px;
+  z-index: 11;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  /* transition: height 1s, width 1s, padding 1s, visibility 1s, opacity 0.5s ease-out; */
+}
+#toolbar-inner{
+
+  position: relative;
+  height: 100%;
+}
+#toolbar-year{
+  font-size: 24px;
+  font-weight: bold;
+  padding: 8px;
+  text-align: center;
+}
+#tool-main-content{
+  height: calc(100% - 127px);
+  overflow: auto;
+  padding: 4px;
+  margin: 0;
+}
+#toolbar-button {
+  font-weight: bold;
+  background-color: rgb(255, 255, 255);
+  /* background-image: url("./assets/images/marker_peak_w_blue.png"); */
+  background-size: 35px;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-size: 16px;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  border: 0px;
+  padding: 0px;
+  position: absolute;
+  z-index: 100;
+  border-radius: 5px;
+  height: 43px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+  overflow: hidden;
+  top: 45px;
+  left: 22.5px;
+  line-height: 43px;
+}
+
+#toolbar-button:focus {
+  outline: none;
+}
+
+#toolbar-button:hover {
+  /* transform: scale(1.03); */
+}
+#toolbar-button.active {
+  left: 300px;
+  background-image: none;
+  top: 35px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50px;
+  background-color: #ff4848;
+}
+#toolbar-button.active::before {
+  color: #fff;
+  font-weight: 300;
+  content: "✕";
+  padding-left: 10px;
+  font-size: 35px;
+}
+#toolbar-button.active:hover {
+  transform: scale(1.03);
+}
+/* TOOLBAR */
+#toolbar {
+  display: none;
+  height: calc(100% - 70px);
+  width: 300px;
+  margin-left: 22.5px;
+  border-radius: 0 0 5px 5px;
+  background: rgba(255, 255, 255, 0.39);
+  position: absolute;
+  top: 50px;
+  z-index: 11;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  /* transition: height 1s, width 1s, padding 1s, visibility 1s, opacity 0.5s ease-out; */
+}
+@media screen and (max-width: 690px) {
+  #toolbar {
+    margin: 0;
+    background-color: #aeb0b3;
+    width: 100% !important;
+    height: 100% !important;
+    top: 0px;
+  }
+  #toolbar-button.active {
+    top: 15px;
+    right: 20px;
+    left: auto;
+  }
+  #toolbar-head {
+  }
+}
+/* TOOLBAR HEADER */
+#toolbar-head {
+  background-color: #ebebeb;
+  height: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* TOOLBAR CONTENT */
+#tool-main-content {
+ 
+  border-radius: 4px;
+}
+.kpi-container {
+  border-radius: 4px;
+  background-color: #fdfdfd;
+  margin-bottom: 8px;
+}
+.kpi-icon {
+  background-position: center center;
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  border-radius: 4px 0 0 4px;
+}
+.kpi-number {
+  font-size: 22px;
+  font-weight: 500;
+  padding-bottom: 8px;
+}
+.kpi-label {
+  padding-top: 4px;
+}
+#incident-icon {
+  background-image: url(./assets/images/bell.svg);
+  background-color: #70bfff;
+}
+#response-icon {
+  background-image: url(./assets/images/clock.svg);
+  background-color: #70bfff;
+}
+#cost-icon {
+  background-image: url(./assets/images/pound-sterling.svg);
+  background-color: #70bfff;
+}
+#false-icon {
+  background-image: url(./assets/images/bell.svg);
+  background-color: #70bfff;
+}
+/* TIME CHART HOLDER */
+#time-chart-holder {
+  height: 150px;
+  width: calc(100% - 40px);
+  position: absolute;
+  right: 0;
+  background-color: white;
+  bottom: 0;
+  z-index: 2;
+  border-radius: 4px;
+  margin: 20px 20px;
+}
+
+/*  Toolbar CHart */
+#fire-type-container, #prop-type-container{
+  height: 200px;
+}
+.toolbar-chart-container {
+  border-radius: 4px;
+  background-color: #fdfdfd;
+  margin-bottom: 8px;
+}
+
+/* HIGHCHARTS */
+.highcharts-figure,
+.highcharts-data-table table {
+  min-width: 360px;
+  margin: 0;
+  height: 150px;
+}
+.highcharts-figure #container {
+  height: 150px;
+}
+
+.highcharts-data-table table {
+  font-family: Verdana, sans-serif;
+  border-collapse: collapse;
+  border: 1px solid #ebebeb;
+  margin: 10px auto;
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+}
+.highcharts-data-table caption {
+  padding: 1em 0;
+  font-size: 1.2em;
+  color: #555;
+}
+.highcharts-data-table th {
+  font-weight: 600;
+  padding: 0.5em;
+}
+.highcharts-data-table td,
+.highcharts-data-table th,
+.highcharts-data-table caption {
+  padding: 0.5em;
+}
+.highcharts-data-table thead tr,
+.highcharts-data-table tr:nth-child(even) {
+  background: #f8f8f8;
+}
+.highcharts-data-table tr:hover {
+  background: #f1f7ff;
+}
+
+.highcharts-figure-tooolbar {
+  height: 200px;
+}
+.highcharts-figure-tooolbar .background {
+  height: 200px;
+}
