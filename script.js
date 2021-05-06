@@ -14,6 +14,8 @@ var years = [
 ];
 
 var activeWard = null;
+// For formatting numbers
+var nf = new Intl.NumberFormat();
 
 $(document).ready(function () {
   mapboxgl.accessToken =
@@ -73,6 +75,22 @@ $(document).ready(function () {
       //Placeing the layer below this:
       "road-label"
     );
+    /// CLICKED LAYER - Highlight the shape the user clicked on!
+    map.addLayer(
+      {
+        id: "fire-clicked",
+        type: "fill",
+        source: "fire", // reference the data source
+        filter: ["==", "GSS_CODE", ""],
+        layout: {},
+        paint: {
+          "fill-color": "#ffffff",
+          "fill-opacity": 0.4,
+        },
+      },
+      //Placeing the layer below this:
+      "road-label"
+    );
   });
 
   //// HOVER EFFECT
@@ -105,6 +123,8 @@ $(document).ready(function () {
   map.on("click", "fire", function (e) {
     setSidebarData(e.features[0].properties);
     activeWard = e.features[0].properties.GSS_CODE;
+    map.setFilter("fire-clicked", ["==", "GSS_CODE", activeWard]);
+
     ToggleToolBox(true);
   });
 
@@ -139,52 +159,6 @@ $(document).ready(function () {
       doAnimation: true,
       type: "bar",
     },
-
-    title: {
-      text: "",
-    },
-    xAxis: {
-      categories: [""],
-    },
-    yAxis: {
-      title: {
-        text: "",
-        min: 0,
-      },
-    },
-    legend: {
-      enabled: false,
-    },
-    plotOptions: {
-      bar: {
-        stacking: "percent",
-      },
-    },
-
-    series: [
-      {
-        name: "False Alarm",
-        data: [5],
-      },
-      {
-        name: "Fire",
-        data: [2],
-      },
-      {
-        name: "Special Service",
-        data: [3],
-      },
-    ],
-  });
-
-  // Property type toolbar chart
-
-  Highcharts.chart("prop-type-container", {
-    chart: {
-      doAnimation: true,
-      type: "bar",
-    },
-
     title: {
       text: "",
     },
@@ -209,12 +183,44 @@ $(document).ready(function () {
     series: [],
   });
 
+  // Property type toolbar chart
+
+  Highcharts.chart("prop-type-container", {
+    chart: {
+      doAnimation: true,
+      type: "bar",
+    },
+
+    title: {
+      text: "",
+    },
+    xAxis: {
+      categories: [""],
+    },
+    yAxis: {
+      title: {
+        text: "",
+        min: 0,
+      },
+    },
+    legend: {
+      enabled: false,
+      layout: "horizontal",
+    },
+    plotOptions: {
+      bar: {
+        stacking: "percent",
+      },
+    },
+
+    series: [],
+  });
+
   // MAIN CHART
   Highcharts.getJSON("./assets/data/timeInci.json", function (data) {
     Highcharts.chart("container", {
       chart: {
         doAnimation: true,
-
         scrollablePlotArea: {
           minWidth: 1700,
           scrollPositionX: 0,
@@ -285,6 +291,7 @@ $(document).ready(function () {
           type: "area",
           name: "Incident Calls",
           data: data,
+          color: "#665191",
         },
       ],
     });
@@ -331,22 +338,44 @@ var response = document.getElementById("response-number");
 var falsenumber = document.getElementById("false-number");
 var cost = document.getElementById("cost-number");
 
+
+var wardError = document.getElementById("ward-error");
+var toolContent = document.getElementById("tool-main-content");
+
+
 function setSidebarData(selectedWard) {
-  toolbarYear.innerHTML = selectedWard["Year"];
-  wardName.innerHTML = selectedWard["NAME"];
+  try {
+    // Handling issue when ward not exist in a cetain year
+    wardError.innerHTML = "";
+    wardError.className = "";
+    toolContent.style.height= "calc(100% - 127px)";
 
-  incident.innerHTML = selectedWard["IncidentNumber"];
-  response.innerHTML = parseFloat(
-    selectedWard["FirstPumpArriving_AttendanceTime"]
-  ).toFixed(0);
-  falsenumber.innerHTML =
-    parseFloat(
-      (selectedWard["False_Alarm_Rate"] / selectedWard["IncidentNumber"]) * 100
-    ).toFixed(1) + "%";
 
-  cost.innerHTML = "£" + selectedWard["Notional Cost (£)"];
+    toolbarYear.innerHTML = selectedWard["Year"];
+    wardName.innerHTML = selectedWard["NAME"];
 
-  setSidebarChart(selectedWard);
+    incident.innerHTML = selectedWard["IncidentNumber"];
+    response.innerHTML = parseFloat(
+      selectedWard["FirstPumpArriving_AttendanceTime"]
+    ).toFixed(0);
+    falsenumber.innerHTML =
+      parseFloat(
+        (selectedWard["False_Alarm_Rate"] / selectedWard["IncidentNumber"]) *
+          100
+      ).toFixed(1) + "%";
+
+    // IF value is 0 - ouput NaN else - formatted number
+    cost.innerHTML =
+      selectedWard["Notional Cost (£)"] != 0
+        ? "£" + nf.format(selectedWard["Notional Cost (£)"])
+        : "NaN";
+
+    setSidebarChart(selectedWard);
+  } catch (error) {
+    wardError.innerHTML = "Ward doesn't exist in the selected year";
+    wardError.className = "active";
+    toolContent.style.height= "0px"
+  }
 }
 
 function setSidebarChart(selectedWard) {
@@ -364,14 +393,17 @@ function setSidebarChart(selectedWard) {
           {
             name: "False Alarm",
             data: [selectedData.values[0]],
+            color: "#bc4f8f",
           },
           {
             name: "Fire",
             data: [selectedData.values[1]],
+            color: "#ff6261",
           },
           {
             name: "Special Service",
             data: [selectedData.values[2]],
+            color: "#584F8C",
           },
         ],
       },
@@ -389,44 +421,54 @@ function setSidebarChart(selectedWard) {
     )[0];
 
     propTypeChart.update(
+      ///https://learnui.design/tools/data-color-picker.html#palette
       {
         series: [
           {
             name: "Aircraft",
             data: [selectedData.values[0]],
+            color: "#003f5c",
           },
           {
             name: "Boat",
             data: [selectedData.values[1]],
+            color: "#2f4b7c",
           },
           {
             name: "Dwelling",
             data: [selectedData.values[2]],
+            color: "#665191",
           },
- 
+
           {
             name: "Non Residential",
             data: [selectedData.values[3]],
+            color: "#a05195",
           },
           {
             name: "Other Residential",
             data: [selectedData.values[4]],
+            color: "#d45087",
           },
           {
             name: "Outdoor",
             data: [selectedData.values[5]],
+            color: "#f95d6a",
           },
           {
             name: "Outdoor Structure",
             data: [selectedData.values[6]],
+            color: "#ff7c43",
           },
           {
             name: "Rail Vehicle",
             data: [selectedData.values[7]],
+            color: "#001e2b",
           },
           {
             name: "Road Vehicle",
             data: [selectedData.values[8]],
+            color: "#ffa600",
           },
         ],
       },

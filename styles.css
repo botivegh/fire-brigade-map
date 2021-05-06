@@ -1,3 +1,4 @@
+/* COLORS: https://learnui.design/tools/data-color-picker.html#palette */
 #map {
   position: absolute;
   width: 100%;
@@ -67,49 +68,25 @@
 /* Map Legend */
 .map-legend {
   position: absolute;
-  bottom: 35px;
+  bottom: 180px;
   right: 20px;
   border-radius: 4px;
-  border: 1px solid #999999;
   background: white;
   z-index: 105;
+  width: 120px;
   cursor: text;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 20%);
 }
-.map-legend .choropleth {
-  box-shadow: none;
-  cursor: text;
+
+.legend-title {
+  font-size: 16px;
+  line-height: 1.2;
+  font-weight: 500;
 }
-.map-legend ul {
-  min-width: 210px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-.map-legend ul li.graph {
-  clear: both;
-  overflow: hidden;
-  display: table;
-  width: 100%;
-  height: 22px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
-  border-radius: 3px;
-  border: 1px solid #b3b3b3;
-}
-.map-legend ul li.graph div {
-  width: 10px;
-  height: 22px;
-}
-.map-legend li.graph .colors {
-  display: table-row;
-  width: 10px;
-  height: 22px;
-}
-.map-legend li.graph .quartile {
-  display: table-cell;
-}
+
 /* box-shadow: inset 0px 0px 0px 1px rgb(0 0 0 / 20%); */
 /* TOOLBAR BUTTON */
 #toolbar {
@@ -126,22 +103,34 @@
   overflow: hidden;
   /* transition: height 1s, width 1s, padding 1s, visibility 1s, opacity 0.5s ease-out; */
 }
-#toolbar-inner{
-
+#toolbar-inner {
   position: relative;
   height: 100%;
 }
-#toolbar-year{
+#toolbar-year {
   font-size: 24px;
-  font-weight: bold;
-  padding: 8px;
+  padding: 0 8px;
   text-align: center;
+  background-color: #d45087;
+  font-weight: 500;
+  color: white;
 }
-#tool-main-content{
+#tool-main-content {
   height: calc(100% - 127px);
   overflow: auto;
+  position: relative;
   padding: 4px;
   margin: 0;
+}
+#ward-error.active {
+  background: white;
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  padding: 16px;
+  font-size: 18px;
+  text-align: center;
+  font-weight: 500;
 }
 #toolbar-button {
   font-weight: bold;
@@ -234,7 +223,6 @@
 }
 /* TOOLBAR CONTENT */
 #tool-main-content {
- 
   border-radius: 4px;
 }
 .kpi-container {
@@ -258,19 +246,19 @@
 }
 #incident-icon {
   background-image: url(./assets/images/bell.svg);
-  background-color: #70bfff;
+  background-color: #584f8c;
 }
 #response-icon {
   background-image: url(./assets/images/clock.svg);
-  background-color: #70bfff;
+  background-color: #584f8c;
 }
 #cost-icon {
   background-image: url(./assets/images/pound-sterling.svg);
-  background-color: #70bfff;
+  background-color: #584f8c;
 }
 #false-icon {
   background-image: url(./assets/images/bell.svg);
-  background-color: #70bfff;
+  background-color: #584f8c;
 }
 /* TIME CHART HOLDER */
 #time-chart-holder {
@@ -286,13 +274,17 @@
 }
 
 /*  Toolbar CHart */
-#fire-type-container, #prop-type-container{
+#fire-type-container,
+#prop-type-container {
   height: 200px;
 }
 .toolbar-chart-container {
   border-radius: 4px;
   background-color: #fdfdfd;
   margin-bottom: 8px;
+  text-align: center;
+  font-weight: 500;
+  padding-top: 4px;
 }
 
 /* HIGHCHARTS */
