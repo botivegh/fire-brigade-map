@@ -41,17 +41,27 @@
   </head>
   <body>
     <div id="page-content">
+
+      <!-- LOADING SCREEN -->
+      <div id="loading-screen"></div>
+      <div id="loading-progress">
+        <div>Loading...</div>
+      </div>
       <!-- TOOLBAR -->
+      <div id="toolbar-overlay" >Click on Wards</div>
+
       <div id="toolbar-button" onclick="ToggleToolBox(false)"></div>
 
       <div id="toolbar" class="toolbar enableBlur">
         <div id="toolbar-inner">
           <div id="toolbar-head">
-            <div id="ward-name">
-              <div id="ward-name-text" class="h5 m-0">Test</div>
+            <div id="ward-name" class="text-center">
+              <div id="ward-name-text" class="h5 m-0 mt-3"></div>
+              <div id="ward-name-subtext" class="m-0" style="font-size: 12px;"></div>
+
             </div>
           </div>
-          <div id="toolbar-year">2020</div>
+          <div id="toolbar-year"></div>
           <!-- TOOLBAR CONTENT - TABS -->
           <div id="ward-error"></div>
 
@@ -109,7 +119,7 @@
       <!-- YEARS SLIDER -->
       <div class="map-overlay top">
         <div class="map-overlay-inner">
-          <h6>London Fire Brigade Incidents</h6>
+          <div>London Fire Brigade Incidents</div>
           <table>
             <tr>
               <td>

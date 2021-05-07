@@ -50,19 +50,15 @@ $(document).ready(function () {
           "fill-color": [
             "step",
             ["get", "IncidentDensity"],
-
-            "#b2c2db",
+            "#EBD0FF",
             0.34,
-            "#849ec5",
-
+            "#C8AEF6",
             0.58,
-
-            "#ffcc00",
+            "#A68ED3",
             0.99,
-            "#f84f40",
-
+            "#866FB2",
             1.89,
-            "#850200",
+            "#665191",
           ],
           "fill-opacity": [
             "case",
@@ -112,7 +108,7 @@ $(document).ready(function () {
   map.on("mouseleave", "state-fills", function () {
     if (hoveredStateId !== null) {
       map.setFeatureState(
-        { source: "states", id: hoveredStateId },
+        { source: "fire", id: hoveredStateId },
         { hover: false }
       );
     }
@@ -227,14 +223,15 @@ $(document).ready(function () {
         },
       },
       title: {
-        text: "",
+        text: "London Daily Fire Incidents 2009-2020",
+        style: { color: "#333333", fontSize: "12px", fontWeight: "600" },
       },
       xAxis: {
         type: "datetime",
         plotBands: [
           {
-            color: "rgba(58, 188, 114, .1)", // Color value
-            borderColor: "rgba(58, 188, 114)",
+            color: "rgba(255, 124, 67, .1)", // Color value
+            borderColor: "rgba(255, 124, 67)",
             borderWidth: "2px",
             animation: {
               enabled: true,
@@ -295,8 +292,19 @@ $(document).ready(function () {
         },
       ],
     });
+
+    // LOADING SCREEN OFF
+    map.once("idle", () => {
+      document.getElementById("loading-screen").style.visibility = "hidden";
+      document.getElementById("loading-progress").style.visibility = "hidden";
+      document.getElementById("page-content").style.filter = "none";
+    
+    });
   });
+
 });
+ 
+
 
 ///// TOGGLE
 //OPEN TOOLBOX
@@ -305,23 +313,26 @@ var toolbar_header = document.getElementById("toolbar-header");
 var toolbar_button = document.getElementById("toolbar-button");
 var location_search = document.getElementById("location-search-container");
 var time_chart = document.getElementById("time-chart-holder");
+var overlay = document.getElementById("toolbar-overlay");
 
 function ToggleToolBox(forceOpen) {
+  overlay.style.display = "none";
+
   if (forceOpen == true) {
     toolbar.style.display = "block";
     toolbar_button.className = "active";
-    time_chart.style.width = "calc(100% - 365px)";
+    time_chart.style.width = "calc(100% - 330px)";
     // location_search.className = "location-search-toolbox-active";
   } else {
     if (toolbar.style.display == "block") {
       toolbar.style.display = "none";
       toolbar_button.className = "";
       //location_search.className = "";
-      time_chart.style.width = "calc(100% - 40px)";
+      time_chart.style.width = "calc(100% - 20px)";
     } else {
       toolbar.style.display = "block";
       toolbar_button.className = "active";
-      time_chart.style.width = "calc(100% - 365px)";
+      time_chart.style.width = "calc(100% - 330px)";
 
       //   location_search.className = "location-search-toolbox-active";
     }
@@ -333,26 +344,26 @@ function ToggleToolBox(forceOpen) {
 // Set toolbox data
 var toolbarYear = document.getElementById("toolbar-year");
 var wardName = document.getElementById("ward-name-text");
+var borough = document.getElementById("ward-name-subtext");
+
 var incident = document.getElementById("incident-number");
 var response = document.getElementById("response-number");
 var falsenumber = document.getElementById("false-number");
 var cost = document.getElementById("cost-number");
 
-
 var wardError = document.getElementById("ward-error");
 var toolContent = document.getElementById("tool-main-content");
-
 
 function setSidebarData(selectedWard) {
   try {
     // Handling issue when ward not exist in a cetain year
     wardError.innerHTML = "";
     wardError.className = "";
-    toolContent.style.height= "calc(100% - 127px)";
-
+    toolContent.style.height = "calc(100% - 127px)";
 
     toolbarYear.innerHTML = selectedWard["Year"];
     wardName.innerHTML = selectedWard["NAME"];
+    borough.innerHTML = selectedWard["BOROUGH"];
 
     incident.innerHTML = selectedWard["IncidentNumber"];
     response.innerHTML = parseFloat(
@@ -374,7 +385,7 @@ function setSidebarData(selectedWard) {
   } catch (error) {
     wardError.innerHTML = "Ward doesn't exist in the selected year";
     wardError.className = "active";
-    toolContent.style.height= "0px"
+    toolContent.style.height = "0px";
   }
 }
 
