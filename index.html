@@ -41,14 +41,13 @@
   </head>
   <body>
     <div id="page-content">
-
       <!-- LOADING SCREEN -->
       <div id="loading-screen"></div>
       <div id="loading-progress">
         <div>Loading...</div>
       </div>
       <!-- TOOLBAR -->
-      <div id="toolbar-overlay" >Click on Wards</div>
+      <div id="toolbar-overlay">Click on Wards</div>
 
       <div id="toolbar-button" onclick="ToggleToolBox(false)"></div>
 
@@ -57,8 +56,11 @@
           <div id="toolbar-head">
             <div id="ward-name" class="text-center">
               <div id="ward-name-text" class="h5 m-0 mt-3"></div>
-              <div id="ward-name-subtext" class="m-0" style="font-size: 12px;"></div>
-
+              <div
+                id="ward-name-subtext"
+                class="m-0"
+                style="font-size: 12px"
+              ></div>
             </div>
           </div>
           <div id="toolbar-year"></div>
@@ -100,14 +102,20 @@
             </div>
             <!-- FIRE TYPECHART -->
             <div class="toolbar-chart-container">
-              Incident Group
+              <div class="px-2 d-flex justify-content-between">
+                <div>Incident Group</div>
+                <a target="_blank" href="https://amberyli.github.io/DVizGroup3/project/Project_Yue_type-of-incident.html">Explore more</a>
+              </div>
               <figure class="highcharts-figure-tooolbar">
                 <div id="fire-type-container"></div>
               </figure>
             </div>
             <!-- Property Type -->
             <div class="toolbar-chart-container">
-              Property Group
+              <div class="px-2 d-flex justify-content-between">
+                <div>Property Group</div>
+                <a target="_blank" href="https://public.flourish.studio/visualisation/6146011/">Explore more</a>
+              </div>
               <figure class="highcharts-figure-tooolbar">
                 <div id="prop-type-container"></div>
               </figure>
@@ -155,42 +163,42 @@
         </div>
       </div>
       <div class="map-legend choropleth" style="display: block">
-        <div class="legend-title">Incidents per Hectar</div>
+        <div class="legend-title">Incidents per 1K m²</div>
 
         <div class="d-block">
           <div
             class="d-inline-block quartile"
-            style="background-color: #EBD0FF; width: 10px; height: 10px"
+            style="background-color: #ebd0ff; width: 10px; height: 10px"
           ></div>
-          <div class="d-inline-block legend-value">0 - .34</div>
+          <div class="d-inline-block legend-value">0 - 3.4</div>
         </div>
         <div class="d-block">
           <div
             class="d-inline-block quartile"
-            style="background-color: #C8AEF6; width: 10px; height: 10px"
+            style="background-color: #c8aef6; width: 10px; height: 10px"
           ></div>
-          <div class="d-inline-block legend-value">.34 - .58</div>
+          <div class="d-inline-block legend-value">3.4 - 5.8</div>
         </div>
         <div class="d-block">
           <span
             class="d-inline-block quartile"
-            style="background-color: #A68ED3; width: 10px; height: 10px"
+            style="background-color: #a68ed3; width: 10px; height: 10px"
           ></span>
-          <div class="d-inline-block legend-value">.58 - .99</div>
+          <div class="d-inline-block legend-value">5.8 - 9.9</div>
         </div>
         <div class="d-block">
           <div
             class="d-inline-block quartile"
-            style="background-color: #866FB2; width: 10px; height: 10px"
+            style="background-color: #866fb2; width: 10px; height: 10px"
           ></div>
-          <div class="d-inline-block legend-value">.99 - 1.89</div>
+          <div class="d-inline-block legend-value">9.9 - 18.9</div>
         </div>
         <div class="d-block">
           <div
             class="d-inline-block quartile"
             style="background-color: #665191; width: 10px; height: 10px"
           ></div>
-          <div class="d-inline-block legend-value">1.89+</div>
+          <div class="d-inline-block legend-value">18.9+</div>
         </div>
       </div>
 
