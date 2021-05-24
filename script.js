@@ -1,3 +1,4 @@
+// List of years
 var years = [
   "2009",
   "2010",
@@ -12,7 +13,7 @@ var years = [
   "2019",
   "2020",
 ];
-
+// Gobal var for active, selected ward
 var activeWard = null;
 // For formatting numbers
 var nf = new Intl.NumberFormat();
@@ -31,7 +32,7 @@ $(document).ready(function () {
   map.addControl(new mapboxgl.NavigationControl(), (position = "top-right"));
   var hoveredStateId = null;
   map.on("load", function () {
-    // Add a data source containing GeoJSON data.
+    // Add a data source containing GeoJSON data
     map.addSource("fire", {
       type: "geojson",
       data: "./assets/data/fire.geojson",
@@ -71,7 +72,7 @@ $(document).ready(function () {
       //Placeing the layer below this:
       "road-label"
     );
-    /// CLICKED LAYER - Highlight the shape the user clicked on!
+    /// CLICKED LAYER - Highlight the shape the user clicked on
     map.addLayer(
       {
         id: "fire-clicked",
@@ -84,7 +85,7 @@ $(document).ready(function () {
           "fill-opacity": 0.4,
         },
       },
-      //Placeing the layer below this:
+      //Placeing the layer below this: - area names above shape layer
       "road-label"
     );
   });
@@ -124,7 +125,7 @@ $(document).ready(function () {
     ToggleToolBox(true);
   });
 
-  // Assign an event listner to the slider so that the filterBy function runs when the user changes the slider
+  // Assign an event listener to the slider so that the filterBy function runs when the user changes the slider
   document.getElementById("slider").addEventListener("input", function (e) {
     var year = parseInt(e.target.value);
     filterBy(year);
@@ -496,6 +497,6 @@ function movePlotBand(year) {
   var plotBand = chart.xAxis[0].plotLinesAndBands[0];
   plotBand.options.from = Date.UTC(year);
   plotBand.options.to = Date.UTC(parseInt(year) + 1);
-  // for some reason it only rendering it smootly if the windows has be resized - weirdest thing ever. ... ..
+  // for some reason it only rendering it smoothly if the windows has be resized - odd
   plotBand.render();
 }
