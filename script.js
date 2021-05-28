@@ -33,6 +33,7 @@ $(document).ready(function () {
   var hoveredStateId = null;
   map.on("load", function () {
     // Add a data source containing GeoJSON data
+    // .gz
     map.addSource("fire", {
       type: "geojson",
       data: "./assets/data/fire.geojson",
